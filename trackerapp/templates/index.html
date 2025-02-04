@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <a href="{% url 'add' %}">Add Expense</a>
+    <table>
+        <thead>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Image</th>
+            <th>Operations</th>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+                <tr>
+                    <td>{{expense.amount}}</td>
+                    <td>{{expense.category}}</td>
+                    <td>{{expense.description}}</td>
+                    <td>{{expense.date}}</td>
+                    <td>
+                        {% if expense.receipts %}
+                            <img src="{{expense.receipts.url}}" width="50">
+                        {% else %}
+                            No receipts
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'update' expense.id %}">✏ Edit</a>
+                        <a href="{% url 'delete' expense.id %}" onclick="return confirm('Are you sure ?');">❌Delete</a>
+                    </td>
+                </tr>
+            
+            {% endfor %}
+
+        </tbody>
+    </table>
+</body>
+</html>
